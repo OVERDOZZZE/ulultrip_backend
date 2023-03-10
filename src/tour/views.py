@@ -32,29 +32,10 @@ class TourListView(generics.ListAPIView):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-
-# class ReviewListView(generics.ListAPIView):
-#     queryset = Review.objects.all()
-#     serializer_class = ReviewSerializer
-
-
-# class ReviewCreateView(APIView):
-#     def post(self, request, id):
-#         post = Tour.objects.get(id=id)
-#         Review.objects.create(
-#             author=request.user,
-#             post_id=id,
-#             text=request.data['text'],
-#             rating=request.data['rating']
-#         )
-#         return Response({'review': "Review was created successfully!"})
-#
-#     permission_classes = [permissions.IsAuthenticated]
 
 
 class CategoryListView(generics.ListAPIView):
